@@ -28,7 +28,7 @@ function CheckoutEmail({
 
 export default function ProductCheckoutPage() {
   const stars = Array(5).fill(0);
-  const { cartItems, getCartTotal, clearCart } = useCartStore();
+  const { cartItems, getCartTotal, clearCart, updateQuantity, removeFromCart } = useCartStore();
   const storeLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
   const router = useRouter();
@@ -207,6 +207,7 @@ export default function ProductCheckoutPage() {
                           )}
                         </div>
                       </div>
+                      
                  
                     </div>
                   </div>
