@@ -138,11 +138,7 @@ export default function ProductDetailsPage() {
                     ${totalOldPrice.toFixed(2)}
                   </p>
                 )}
-                {quantity > 1 && (
-                  <p className="text-sm text-[#7A7A7A] ml-2">
-                    (${( product.price).toFixed(2)} × {quantity})
-                  </p>
-                )}
+              
               </div>
             </div>
 
