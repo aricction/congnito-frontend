@@ -153,7 +153,7 @@ export default function ProductCheckoutPage() {
           <div className="p-4 border rounded mb-4">
             <p className="font-bold text-[20px]">Summary</p>
             <p className="text-[#7A7A7A] text-[13px] mt-4">sub-Total</p>
-            <p className="text-[#7A7A7A] text-[13px]">Delivery Charges</p>
+            <p className="text-[#7A7A7A] text-[13px] mt-2">Delivery Charges</p>
             <div className="flex justify-between items-center border-t mt-3 pt-3">
               <p className="font-medium">Total Amount:</p>
               <p className="font-semibold">${getCartTotal()}</p>

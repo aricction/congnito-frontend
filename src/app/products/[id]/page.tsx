@@ -211,9 +211,8 @@ export default function ProductDetailsPage() {
             Products.length > 0 &&
             Products.map((item, idx) => {
               return (
-                <Card className="p-3 gap-1">
+                <Card key={item.id || `product-${idx}`} className="p-3 gap-1">
                   <div
-                    key={idx}
                     className="relative w-full h-full rounded-lg overflow-hidden border border-gray-200"
                   >
                     <img

@@ -39,7 +39,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
   getCartTotal: () => {
     return get().cartItems.reduce((total, item) => {
-      const price = typeof item.price === "string" ? parseFloat(item.price) : item.price;
+      const price =  item.price;
       return total + price * item.quantity;
     }, 0);
   },
