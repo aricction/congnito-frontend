@@ -2,19 +2,30 @@
 
 import React, { FC, useState } from "react";
 import Link from "next/link";
-import { UserIcon, HeartIcon, ShoppingCartIcon, MagnifyingGlassIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import {
+  UserIcon,
+  HeartIcon,
+  ShoppingCartIcon,
+  MagnifyingGlassIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 import AuthModal from "../account-login-modal/page";
-
+import { useCartStore } from "@/store/cart-store";
 const SearchBar: FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const toggleAuthModal = () => setIsAuthModalOpen(!isAuthModalOpen);
   const closeAuthModal = () => setIsAuthModalOpen(false);
+  const cartItems = useCartStore((state) => state.cartItems);
 
   return (
     <>
       <nav className="w-full py-3 px-5 flex items-center justify-center mx-auto border-b border-[#E9E9E9]">
-        <img src="/asset/navbar.png" alt="Cognito logo" className="h-auto w-auto px-6" />
+        <img
+          src="/asset/navbar.png"
+          alt="Cognito logo"
+          className="h-auto w-auto px-6"
+        />
 
         <div className="relative w-[600px]">
           <input
@@ -37,7 +48,10 @@ const SearchBar: FC = () => {
 
         <ul className="flex items-center space-x-6 px-12">
           <li>
-            <div className="flex items-center space-x-1 cursor-pointer" onClick={toggleAuthModal}>
+            <div
+              className="flex items-center space-x-1 cursor-pointer"
+              onClick={toggleAuthModal}
+            >
               <UserIcon className="w-5 h-5 text-gray-700" />
               <span className="text-[14px] font-medium">Account</span>
             </div>
@@ -52,8 +66,13 @@ const SearchBar: FC = () => {
 
           <li>
             <Link href="/checkout">
-              <div className="flex items-center space-x-1 cursor-pointer">
+              <div className="relative flex items-center space-x-1 cursor-pointer">
+                <span className="absolute -top-2 right-10 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                  {cartItems.length}
+                </span>
+
                 <ShoppingCartIcon className="w-5 h-5 text-gray-700" />
+
                 <span className="text-[14px] font-medium">Cart</span>
               </div>
             </Link>
