@@ -67,9 +67,12 @@ const SearchBar: FC = () => {
           <li>
             <Link href="/checkout">
               <div className="relative flex items-center space-x-1 cursor-pointer">
-                <span className="absolute -top-2 right-10 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {cartItems.length > 0 && (
+ <span className="absolute -top-2 right-10 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                   {cartItems.length}
                 </span>
+                )}
+               
 
                 <ShoppingCartIcon className="w-5 h-5 text-gray-700" />
 
