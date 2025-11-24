@@ -42,7 +42,7 @@ const dealproduct: Product[] = dealsProduct.map((item: any) => ({
 
 export default function Home() {
   return (
-    <div className="w-[1920px] items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <div className="">
         <Navbar />
         <SearchBar />

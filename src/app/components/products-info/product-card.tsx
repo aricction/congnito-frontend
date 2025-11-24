@@ -5,22 +5,41 @@ import { Product } from "@/app/types/type-for-product";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { Card } from "@/components/ui/card";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { useCartStore } from "@/store/cart-store";
 
 interface Props {
   product: Product;
-    variant?: "default" | "deals" | "home"; 
+  variant?: "default" | "deals" | "home";
 }
 
-export default function ProductCard({ product,  variant = "default" }: Props) {
+export default function ProductCard({ product, variant = "default" }: Props) {
+  
+  
+  const addToCart = useCartStore((state) => state.addToCart);
+  const cartItems = useCartStore((state) => state.cartItems);
+  const existingCartItem = cartItems.find((item) => item.id === product.id);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
 
-  const cardWidth = variant === "deals"
-      ? "w-[378.5px]": "w-[298px]";
-   
+  const handleAddToCart = (e: React.MouseEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (existingCartItem) {
+    const newQty = existingCartItem.quantity + 1;
+    updateQuantity(product.id, newQty);
+    alert(`${product.name} quantity updated to ${newQty}!`);
+  } else {
+    addToCart(product, 1);
+    alert(`${product.name} added to cart!`);
+  }
+};
+
   return (
     <Link href={`/products/${product.id}`}>
       <div className="w-[298px] border rounded-3xl shadow-md hover:shadow-lg transition relative group cursor-pointer p-4">
         <p
-          className={`absolute top-0 left-0 text-white px-6 py-1 rounded-tl-full rounded-br-full ${product.spanColor}`}>
+          className={`absolute top-0 left-0 text-white px-6 py-1 rounded-tl-full rounded-br-full ${product.spanColor}`}
+        >
           {product.span}
         </p>
 
@@ -43,11 +62,11 @@ export default function ProductCard({ product,  variant = "default" }: Props) {
           </h2>
         </div>
 
-      {product.by && (
+        {product.by && (
           <div className="flex space-x-1">
-          <p className="text-[#B6B6B6]">By</p>{" "}
-          <span className="text-[#3BB77E]">{product.by}</span>
-        </div>
+            <p className="text-[#B6B6B6]">By</p>{" "}
+            <span className="text-[#3BB77E]">{product.by}</span>
+          </div>
         )}
 
         <div className="flex  items-center justify-between mt-2">
@@ -62,30 +81,37 @@ export default function ProductCard({ product,  variant = "default" }: Props) {
             )}
           </div>
           {variant === "home" && (
-              <button className="bg-[#F53E32] text-white text-[14px] px-4 py-2 rounded-md flex items-center gap-2">
-            <ShoppingCartIcon className="w-4 h-4" />
-            Add
-          </button>
-        )}
+            <button
+              onClick={handleAddToCart}
+              className="bg-[#F53E32] text-white text-[14px] px-4 py-2 rounded-md flex items-center gap-2"
+            >
+              <ShoppingCartIcon className="w-4 h-4" />
+              Add
+            </button>
+          )}
         </div>
 
-         {variant === "deals" && (
-
+        {variant === "deals" && (
           <div>
-
-              <button className="bg-[#F53E32] text-white text-[14px] px-4 py-2 rounded-md flex items-center gap-2">
-            <ShoppingCartIcon className="w-4 h-4" />
-            Add
-          </button>
+            <button
+              onClick={handleAddToCart}
+              className="bg-[#F53E32] text-white text-[14px] px-4 py-2 rounded-md flex items-center gap-2"
+            >
+              <ShoppingCartIcon className="w-4 h-4" />
+              Add
+            </button>
           </div>
         )}
 
-         {variant === "default" && (
-        <button  className="bg-[#F53E32] w-full mt-12 justify-center text-white text-[14px] px-4 py-2 rounded flex items-center gap-2">
-                      <ShoppingCartIcon className="w-4 h-4" />
-           Add to Cart
-        </button>
-      )}
+        {variant === "default" && (
+          <button
+            onClick={handleAddToCart}
+            className="bg-[#F53E32] w-full mt-12 justify-center text-white text-[14px] px-4 py-2 rounded flex items-center gap-2"
+          >
+            <ShoppingCartIcon className="w-4 h-4" />
+            Add to Cart
+          </button>
+        )}
       </div>
     </Link>
   );

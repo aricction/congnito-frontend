@@ -2,13 +2,9 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { Product } from "../../types/type-for-product";
-import ProductsData from "@/data/product.json";
 import { Card } from "@/components/ui/card";
-import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Navbar from "@/app/components/navbar-component/page";
 import SearchBar from "@/app/components/searchbar-component/page";
-import { Button } from "@/components/ui/button";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useProductStore } from "@/store/product-store";
 import { useCartStore } from "@/store/cart-store";
@@ -63,15 +59,20 @@ export default function ProductDetailsPage() {
   const handleDecrement = () =>
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-  const handleAddToCart = () => {
-    if (existingCartItem) {
-      // If item exists, update the quantity to the new quantity
-      updateQuantity(product.id, quantity);
-    } else {
-      // If new item, add it with the specified quantity
-      addToCart(product, quantity);
-    }
-  };
+const handleAddToCart = () => {
+ 
+  if (existingCartItem) {
+    const newQty = existingCartItem.quantity + 1;
+    updateQuantity(product.id, newQty);
+    alert(`${product.name} quantity updated to ${newQty}!`);
+  } else {
+    addToCart(product, 1);
+    alert(`${product.name} added to cart!`);
+  }
+};
+
+
+  
 
   return (
     <>
